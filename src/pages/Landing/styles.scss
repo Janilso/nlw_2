@@ -1,0 +1,132 @@
+@import "../../assets/styles/var-colors.scss";
+@import "../../assets/styles/aligments.scss";
+@import "../../assets/styles/functions.scss";
+
+.pg-landing {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $text-in-primary;
+  background: $primary;
+
+  .pg-landing__logo {
+    text-align: center;
+    margin-bottom: 3.2rem;
+
+    h2 {
+      font-weight: 500;
+      font-size: 2.4rem;
+      line-height: 4.5rem;
+      margin-top: 0.8rem;
+    }
+
+    img {
+      height: 10rem;
+    }
+  }
+
+  .pg-landing__hero {
+    width: 100%;
+  }
+
+  .pg-landing__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3.2rem 0;
+
+    a {
+      width: 30rem;
+      height: 10.4rem;
+      border-radius: $border-radius;
+      font: 700 2rem Archivo;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: $button-text;
+      @include propertyAllBrowsers(transition, all 0.2s);
+
+      &:first-child {
+        margin-right: 1.6rem;
+      }
+      &.pg-landing__study {
+        background: $primary-lighter;
+
+        &:hover {
+          background: $primary-light;
+        }
+      }
+      &.pg-landing__give {
+        background: $secundary;
+        &:hover {
+          background: $secundary-dark;
+        }
+      }
+
+      img {
+        width: 4rem;
+      }
+    }
+  }
+
+  .pg-landing__total-connections {
+    font-size: 1.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      margin-left: 0.8rem;
+    }
+  }
+}
+
+@media (min-width: 1100px) {
+  .pg-landing {
+    .pg-landing__content {
+      max-width: 1100px;
+      display: grid;
+      grid-template-rows: 350px 1fr;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-areas: "logo hero hero" "buttons buttons total";
+    }
+    .pg-landing__logo {
+      grid-area: logo;
+      align-self: center;
+      margin-bottom: 0;
+      text-align: left;
+
+      h2 {
+        text-align: initial;
+        font-size: 3.6rem;
+      }
+
+      img {
+        height: 100%;
+      }
+    }
+
+    .pg-landing__hero {
+      grid-area: hero;
+      justify-self: end;
+    }
+    .pg-landing__actions {
+      grid-area: buttons;
+      justify-content: flex-start;
+
+      a {
+        font-size: 2.4rem;
+        img {
+          margin-right: 2.4rem;
+        }
+      }
+    }
+    .pg-landing__total-connections {
+      grid-area: total;
+      justify-self: end;
+    }
+  }
+}
