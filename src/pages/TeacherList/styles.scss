@@ -1,0 +1,79 @@
+@import "../../assets/styles/var-colors.scss";
+@import "../../assets/styles/aligments.scss";
+
+.pg-teacher-list {
+  width: 100vw;
+  height: 100vh;
+
+  .pg-teacher-list__form {
+    margin-top: 3.2rem;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    label {
+      color: $text-in-primary;
+    }
+    .pg-teacher-list__input {
+      position: relative;
+      width: 100%;
+
+      label {
+        font-size: 1.4rem;
+      }
+
+      input {
+        width: 100%;
+        height: 5.6rem;
+        margin-top: 0.8rem;
+        border-radius: $border-radius;
+        background-color: $input-background;
+        border: 1px solid $line-in-white;
+        outline: 0;
+        padding: 0 1.6rem;
+        font: 1.6rem Archivo;
+      }
+
+      &:focus-within::after {
+        content: "";
+        width: calc(100% - 3.2rem);
+        height: 2px;
+        background: $primary-light;
+        position: absolute;
+        left: 1.6rem;
+        right: 1.6rem;
+        bottom: 0;
+      }
+
+      & + .pg-teacher-list__input {
+        margin-top: 1.4rem;
+      }
+    }
+  }
+
+  .pg-teacher-list__listagem {
+    padding: 3.2rem 0;
+  }
+}
+@media (min-width: 700px) {
+  .pg-teacher-list {
+    max-width: 100%;
+
+    .pg-teacher-list__form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 16px;
+      position: absolute;
+      bottom: -45px;
+      width: 90%;
+
+      .pg-teacher-list__input {
+        & + .pg-teacher-list__input {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}

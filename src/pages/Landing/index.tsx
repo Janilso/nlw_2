@@ -7,6 +7,7 @@ import {
   purpleHeartIcon,
 } from "../../assets";
 import "./styles.scss";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
@@ -22,14 +23,14 @@ const Landing = () => {
           className="pg-landing__hero"
         />
         <div className="pg-landing__actions">
-          <a href="#teste" className="pg-landing__study">
+          <Link to="/study" className="pg-landing__study">
             <img src={studyIcon} alt="Estudar" />
             Estudar
-          </a>
-          <a href="#teste" className="pg-landing__give">
+          </Link>
+          <Link to="/give-classes" className="pg-landing__give">
             <img src={giveIcon} alt="Dar aulas " />
             Dar aulas
-          </a>
+          </Link>
         </div>
         <span className="pg-landing__total-connections">
           Total de 200 conexões já realizadas
