@@ -1,4 +1,5 @@
 @import "./var-colors.scss";
+@import "./functions.scss";
 
 :root {
   font-size: 60%;
@@ -32,6 +33,7 @@ button,
 textarea {
   font: 500 1.6rem Poppins;
   color: $text-base;
+  @include propertyAllBrowsers(transition, all 0.2s);
 }
 
 .container {

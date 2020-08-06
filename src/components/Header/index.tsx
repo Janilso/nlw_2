@@ -5,10 +5,10 @@ import "./styles.scss";
 
 interface HeaderProps {
   title: string;
+  description?: string;
 }
 
-const Header: React.FC<HeaderProps> = (props) => {
-  const { title, children } = props;
+const Header: React.FC<HeaderProps> = ({ title, children, description }) => {
   return (
     <header className="comp-header">
       <div className="comp-header__actions-top">
@@ -19,6 +19,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       </div>
       <div className="comp-header__title">
         <strong>{title}</strong>
+        {description && <p>{description}</p>}
         {children}
       </div>
     </header>
