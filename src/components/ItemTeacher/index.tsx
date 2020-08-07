@@ -1,26 +1,43 @@
 import React from "react";
 import { whatsappIcon } from "../../assets";
 import "./styles.scss";
+import { createConnection } from "net";
+import { createConnections } from "../../services/serviceConnections";
 
 interface ItemTeacher {
-  urlFoto: string;
+  avatar: string;
   nome?: string;
   disciplina?: string;
   descricao?: string;
-  subdescricao?: string;
-  preco?: string;
+  preco?: number;
   whatsapp?: number;
+  key?: number;
+  id: number;
 }
 
-const ItemTeacher: React.FC<ItemTeacher> = (props) => {
-  const { urlFoto, nome, disciplina, descricao, subdescricao, preco } = props;
+const ItemTeacher: React.FC<ItemTeacher> = ({
+  avatar,
+  nome,
+  disciplina,
+  descricao,
+  preco,
+  whatsapp,
+  key,
+  id,
+}) => {
+  function createNewConnection() {
+    createConnections({ user_id: id });
+  }
+
+  const size = window.innerWidth;
+
   return (
-    <main className="comp-item-teacher">
+    <main key={key} className="comp-item-teacher">
       <article className="comp-item-teacher__item">
         <header>
           <img
             src={
-              urlFoto ||
+              avatar ||
               "https://www.bauducco.com.br/wp-content/uploads/2017/09/default-placeholder-1-2.png"
             }
             alt={nome}
@@ -31,17 +48,21 @@ const ItemTeacher: React.FC<ItemTeacher> = (props) => {
           </div>
         </header>
         <p> {descricao} </p>
-        <br />
-        <br />
-        <p>{subdescricao}</p>
         <footer>
           <p>
             Preço/Hora <strong>{preco}</strong>
           </p>
-          <button type="button">
+          <a
+            onClick={createNewConnection}
+            href={`https://${
+              size > 700 ? "web" : "api"
+            }.whatsapp.com/send?phone=55${whatsapp}`}
+            // eslint-disable-next-line react/jsx-no-target-blank
+            target="_blank"
+          >
             <img src={whatsappIcon} alt="Whatsapp" />
             Entrar em contato
-          </button>
+          </a>
         </footer>
       </article>
     </main>
