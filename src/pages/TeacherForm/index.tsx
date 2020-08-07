@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 
 import Header from "../../components/Header";
 import Input from "../../components/Input";
@@ -8,15 +8,61 @@ import Select from "../../components/Select";
 import { warningIcon } from "../../assets";
 
 import "./styles.scss";
+import { createClass } from "../../services/serviceClasses";
 
 const TeacherForm = () => {
-  const [schedulesItems, setSchedulesItems] = useState([
+  const [name, setName] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [bio, setBio] = useState("");
+
+  const [subject, setSubject] = useState("");
+  const [cost, setCost] = useState("");
+
+  const [scheduleItems, setScheduleItems] = useState([
     { week_day: 0, from: "", to: "" },
   ]);
 
-  const addNewScheduleItem = () => {
-    setSchedulesItems([...schedulesItems, { week_day: 0, from: "", to: "" }]);
-  };
+  function addNewScheduleItem() {
+    setScheduleItems([...scheduleItems, { week_day: 0, from: "", to: "" }]);
+  }
+
+  function setScheduleItemValue(
+    position: number,
+    field: string,
+    value: string
+  ) {
+    const newArray = scheduleItems.map((scheduleItem, index) => {
+      if (index === position)
+        return {
+          ...scheduleItem,
+          [field]: field === "week_day" ? Number(value) : value,
+        };
+      return scheduleItem;
+    });
+    setScheduleItems(newArray);
+  }
+
+  function handleCreateClass(e: FormEvent) {
+    e.preventDefault();
+    const objectSend = {
+      name,
+      avatar,
+      bio,
+      whatsapp,
+      subject,
+      cost: Number(cost),
+      schedule: scheduleItems,
+    };
+
+    createClass(objectSend)
+      .then(() => {
+        alert("Cadastro realizado com sucesso");
+      })
+      .catch(() => {
+        alert("Erro no cadastro");
+      });
+  }
 
   return (
     <div className="teacher-form container">
@@ -26,13 +72,33 @@ const TeacherForm = () => {
       />
 
       <main className="teacher-form__formulario">
-        <form>
+        <form onSubmit={handleCreateClass}>
           <fieldset>
             <legend>Seus dados</legend>
-            <Input name="name" label="Nome completo" />
-            <Input name="avatar" label="Avatar" />
-            <Input name="whatsapp" label="Whatsapp" />
-            <Textarea name="bio" label="Biografia" />
+            <Input
+              name="name"
+              label="Nome completo"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Input
+              name="avatar"
+              label="Avatar"
+              value={avatar}
+              onChange={(e) => setAvatar(e.target.value)}
+            />
+            <Input
+              name="whatsapp"
+              label="Whatsapp"
+              value={whatsapp}
+              onChange={(e) => setWhatsapp(e.target.value)}
+            />
+            <Textarea
+              name="bio"
+              label="Biografia"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+            />
           </fieldset>
           <fieldset>
             <legend>Sobre aula</legend>
@@ -51,8 +117,15 @@ const TeacherForm = () => {
                 { value: "Português", label: "Português" },
                 { value: "Química", label: "Química" },
               ]}
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
             />
-            <Input name="cost" label="Custa da sua aula por hora" />
+            <Input
+              name="cost"
+              label="Custo da sua aula por hora"
+              value={cost}
+              onChange={(e) => setCost(e.target.value)}
+            />
           </fieldset>
           <fieldset>
             <legend>
@@ -61,7 +134,7 @@ const TeacherForm = () => {
                 + Novo horário
               </button>
             </legend>
-            {schedulesItems.map((item, index) => {
+            {scheduleItems.map((item, index) => {
               return (
                 <div key={index} className="teacher-form__schedule-item">
                   <Select
@@ -76,9 +149,29 @@ const TeacherForm = () => {
                       { value: "5", label: "Sexta-feira" },
                       { value: "6", label: "Sábado" },
                     ]}
+                    value={item.week_day}
+                    onChange={(e) =>
+                      setScheduleItemValue(index, "week_day", e.target.value)
+                    }
                   />
-                  <Input name="from" label="Das" type="time" />
-                  <Input name="to" label="Até" type="time" />
+                  <Input
+                    name="from"
+                    label="Das"
+                    type="time"
+                    value={item.from}
+                    onChange={(e) =>
+                      setScheduleItemValue(index, "from", e.target.value)
+                    }
+                  />
+                  <Input
+                    name="to"
+                    label="Até"
+                    type="time"
+                    value={item.to}
+                    onChange={(e) =>
+                      setScheduleItemValue(index, "to", e.target.value)
+                    }
+                  />
                 </div>
               );
             })}
@@ -89,7 +182,7 @@ const TeacherForm = () => {
               Importante <br />
               Preencha os dados
             </p>
-            <button type="button">Salvar cadastro</button>
+            <button type="submit">Salvar cadastro</button>
           </footer>
         </form>
       </main>

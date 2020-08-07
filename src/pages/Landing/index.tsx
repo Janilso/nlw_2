@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   logoImg,
   landingImg,
@@ -8,8 +8,15 @@ import {
 } from "../../assets";
 import "./styles.scss";
 import { Link } from "react-router-dom";
+import { getConnections } from "../../services/serviceConnections";
 
 const Landing = () => {
+  const [totalConnections, setTotalConnections] = useState(0);
+
+  useEffect(() => {
+    getConnections().then(({ total }) => setTotalConnections(total));
+  }, []);
+
   return (
     <div className="pg-landing">
       <div className="pg-landing__content container">
@@ -33,7 +40,7 @@ const Landing = () => {
           </Link>
         </div>
         <span className="pg-landing__total-connections">
-          Total de 200 conexões já realizadas
+          Total de {totalConnections} conexões já realizadas
           <img src={purpleHeartIcon} alt="Coração roxo" />
         </span>
       </div>

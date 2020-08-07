@@ -1,5 +1,6 @@
 @import "../../assets/styles/var-colors.scss";
 @import "../../assets/styles/aligments.scss";
+@import "../../assets/styles/functions.scss";
 
 .pg-teacher-list {
   width: 100vw;
@@ -16,6 +17,28 @@
     label {
       color: $text-in-primary;
     }
+    button {
+      width: 100%;
+      height: 5.6rem;
+      background: $secundary;
+      color: $button-text;
+      border: 0;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font: 700 1.6rem Archivo;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      margin-top: 3.2rem;
+      outline: 0 !important;
+
+      @include propertyAllBrowsers(transition, all 0.2s);
+
+      &:hover {
+        background: $secundary-dark;
+      }
+    }
   }
 
   .pg-teacher-list__listagem {
@@ -28,7 +51,7 @@
 
     .pg-teacher-list__form {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       column-gap: 16px;
       position: absolute;
       bottom: -45px;
