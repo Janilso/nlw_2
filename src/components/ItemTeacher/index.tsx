@@ -1,7 +1,6 @@
 import React from "react";
 import { whatsappIcon } from "../../assets";
 import "./styles.scss";
-import { createConnection } from "net";
 import { createConnections } from "../../services/serviceConnections";
 
 interface ItemTeacher {
