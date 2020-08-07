@@ -43,6 +43,12 @@
 
   .pg-teacher-list__listagem {
     padding: 3.2rem 0;
+
+    .pg-teacher-list__empty {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 1.6rem;
+    }
   }
 }
 @media (min-width: 700px) {
@@ -61,6 +67,14 @@
         & + .pg-teacher-list__input {
           margin-top: 0;
         }
+      }
+    }
+    .pg-teacher-list__listagem {
+      .pg-teacher-list__empty {
+        margin: 6rem auto 0;
+        font-size: 1.6rem;
+        font-family: Poppins;
+        width: 30rem;
       }
     }
   }

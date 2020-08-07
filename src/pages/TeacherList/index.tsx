@@ -5,6 +5,7 @@ import ItemTeacher from "../../components/ItemTeacher";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import { getClasses, Teacher } from "../../services/serviceClasses";
+import Loader from "../../components/Loader";
 
 const TeacherList = () => {
   const [subject, setSubject] = useState("");
@@ -18,6 +19,15 @@ const TeacherList = () => {
       setTeachers(response);
     });
     return console.log({ subject, weekday, time });
+  }
+
+  function renderEmptyTeachers() {
+    return (
+      <div className="pg-teacher-list__empty">
+        Nenhum professor encontrado com sua pesquisa.
+        <Loader />
+      </div>
+    );
   }
 
   return (
@@ -86,7 +96,7 @@ const TeacherList = () => {
                 );
               }
             )
-          : null}
+          : renderEmptyTeachers()}
       </div>
     </div>
   );
