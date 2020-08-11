@@ -2,6 +2,7 @@ import React from "react";
 import { whatsappIcon } from "../../assets";
 import "./styles.scss";
 import { createConnections } from "../../services/serviceConnections";
+import Button from "../Button";
 
 interface ItemTeacher {
   avatar: string;
@@ -25,10 +26,15 @@ const ItemTeacher: React.FC<ItemTeacher> = ({
   id,
 }) => {
   function createNewConnection() {
+    const size = window.innerWidth;
     createConnections({ user_id: id });
+    window.open(
+      `https://${
+        size > 700 ? "web" : "api"
+      }.whatsapp.com/send?phone=55${whatsapp}`,
+      "_blank"
+    );
   }
-
-  const size = window.innerWidth;
 
   return (
     <main key={key} className="comp-item-teacher">
@@ -51,17 +57,12 @@ const ItemTeacher: React.FC<ItemTeacher> = ({
           <p>
             Preço/Hora <strong>{preco}</strong>
           </p>
-          <a
+          <Button
+            text="Entrar em contato"
+            typeButton="secondary"
             onClick={createNewConnection}
-            href={`https://${
-              size > 700 ? "web" : "api"
-            }.whatsapp.com/send?phone=55${whatsapp}`}
-            // eslint-disable-next-line react/jsx-no-target-blank
-            target="_blank"
-          >
-            <img src={whatsappIcon} alt="Whatsapp" />
-            Entrar em contato
-          </a>
+            icon={whatsappIcon}
+          />
         </footer>
       </article>
     </main>

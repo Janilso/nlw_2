@@ -5,27 +5,33 @@ import ItemTeacher from "../../components/ItemTeacher";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import { getClasses, Teacher } from "../../services/serviceClasses";
-import Loader from "../../components/Loader";
+import Button from "../../components/Button";
 
 const TeacherList = () => {
   const [subject, setSubject] = useState("");
   const [weekday, setWeekday] = useState("");
   const [time, setTime] = useState("");
   const [teachers, setTeachers] = useState<Teacher[]>([]);
+  const [loadingTeachers, setLoadingTeachers] = useState(false);
 
   function searchTeachers(e: FormEvent) {
     e.preventDefault();
-    getClasses(subject, Number(weekday), time).then((response) => {
-      setTeachers(response);
-    });
-    return console.log({ subject, weekday, time });
+    console.log("clicked");
+
+    setLoadingTeachers(true);
+
+    getClasses(subject, Number(weekday), time)
+      .then((response) => {
+        setTeachers(response);
+        setLoadingTeachers(false);
+      })
+      .catch(() => setLoadingTeachers(false));
   }
 
   function renderEmptyTeachers() {
     return (
       <div className="pg-teacher-list__empty">
         Nenhum professor encontrado com sua pesquisa.
-        <Loader />
       </div>
     );
   }
@@ -74,7 +80,12 @@ const TeacherList = () => {
             value={time}
             onChange={(e) => setTime(e.target.value)}
           />
-          <button type="submit">Buscar</button>
+          <Button
+            text="Buscar"
+            type="submit"
+            typeButton="secondary"
+            loading={loadingTeachers}
+          />
         </form>
       </Header>
       <div className="pg-teacher-list__listagem">

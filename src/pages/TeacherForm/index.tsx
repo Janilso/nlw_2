@@ -1,28 +1,45 @@
 import React, { useState, FormEvent } from "react";
 
+import { warningIcon } from "../../assets";
+import { createClass } from "../../services/serviceClasses";
+
 import Header from "../../components/Header";
 import Input from "../../components/Input";
 import Textarea from "../../components/Textarea";
 import Select from "../../components/Select";
-
-import { warningIcon } from "../../assets";
-
+import Button from "../../components/Button";
 import "./styles.scss";
-import { createClass } from "../../services/serviceClasses";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+
+interface IFormInput {
+  name: string;
+  avatar: string;
+  whatsapp: number;
+  bio: string;
+  subject: string;
+  cost: number;
+  scheduleItems: Array<{
+    week_day: string;
+    from: string;
+    to: string;
+  }>;
+}
 
 const TeacherForm = () => {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [bio, setBio] = useState("");
-
   const [subject, setSubject] = useState("");
   const [cost, setCost] = useState("");
-
   const [scheduleItems, setScheduleItems] = useState([
     { week_day: 0, from: "", to: "" },
   ]);
+  const [loadingClass, setLoadingClass] = useState(false);
+  const { handleSubmit, errors, register } = useForm<IFormInput>();
 
+  // Functions
   function addNewScheduleItem() {
     setScheduleItems([...scheduleItems, { week_day: 0, from: "", to: "" }]);
   }
@@ -43,8 +60,11 @@ const TeacherForm = () => {
     setScheduleItems(newArray);
   }
 
+  const onSubmit = (data: IFormInput) => console.log(data);
+
   function handleCreateClass(e: FormEvent) {
     e.preventDefault();
+    setLoadingClass(true);
     const objectSend = {
       name,
       avatar,
@@ -57,11 +77,10 @@ const TeacherForm = () => {
 
     createClass(objectSend)
       .then(() => {
-        alert("Cadastro realizado com sucesso");
+        setLoadingClass(false);
+        toast.success("Cadastro realizado com sucesso");
       })
-      .catch(() => {
-        alert("Erro no cadastro");
-      });
+      .catch(() => setLoadingClass(false));
   }
 
   return (
@@ -72,32 +91,43 @@ const TeacherForm = () => {
       />
 
       <main className="teacher-form__formulario">
-        <form onSubmit={handleCreateClass}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset>
             <legend>Seus dados</legend>
             <Input
+              register={register({
+                required: "Peencha este campo",
+              })}
               name="name"
               label="Nome completo"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              error={Boolean(errors.name)}
             />
             <Input
+              register={register}
               name="avatar"
               label="Avatar"
               value={avatar}
               onChange={(e) => setAvatar(e.target.value)}
+              error={Boolean(errors.avatar)}
             />
             <Input
+              register={register({ required: "Peencha este campo" })}
               name="whatsapp"
               label="Whatsapp"
               value={whatsapp}
               onChange={(e) => setWhatsapp(e.target.value)}
+              error={Boolean(errors.whatsapp)}
             />
+
             <Textarea
+              register={register({ required: "Peencha este campo" })}
               name="bio"
               label="Biografia"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
+              // error={Boolean(errors.bio)}
             />
           </fieldset>
           <fieldset>
@@ -182,7 +212,12 @@ const TeacherForm = () => {
               Importante <br />
               Preencha os dados
             </p>
-            <button type="submit">Salvar cadastro</button>
+            <Button
+              text="Salvar cadastro"
+              type="submit"
+              typeButton="secondary"
+              loading={loadingClass}
+            />
           </footer>
         </form>
       </main>
