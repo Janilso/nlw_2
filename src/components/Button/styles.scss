@@ -23,6 +23,7 @@
 
   &:disabled {
     background: $text-complement !important;
+    cursor: not-allowed;
   }
 
   &:hover {

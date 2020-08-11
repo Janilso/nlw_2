@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState } from "react";
 
 import { warningIcon } from "../../assets";
 import { createClass } from "../../services/serviceClasses";
@@ -27,12 +27,7 @@ interface IFormInput {
 }
 
 const TeacherForm = () => {
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
-  const [bio, setBio] = useState("");
   const [subject, setSubject] = useState("");
-  const [cost, setCost] = useState("");
   const [scheduleItems, setScheduleItems] = useState([
     { week_day: 0, from: "", to: "" },
   ]);
@@ -60,21 +55,7 @@ const TeacherForm = () => {
     setScheduleItems(newArray);
   }
 
-  const onSubmit = (data: IFormInput) => console.log(data);
-
-  function handleCreateClass(e: FormEvent) {
-    e.preventDefault();
-    setLoadingClass(true);
-    const objectSend = {
-      name,
-      avatar,
-      bio,
-      whatsapp,
-      subject,
-      cost: Number(cost),
-      schedule: scheduleItems,
-    };
-
+  function fetchCreateClass(objectSend: Object) {
     createClass(objectSend)
       .then(() => {
         setLoadingClass(false);
@@ -82,6 +63,26 @@ const TeacherForm = () => {
       })
       .catch(() => setLoadingClass(false));
   }
+
+  const onSubmit = (data: IFormInput) => {
+    const { name, avatar, whatsapp, bio, subject, cost } = data;
+    const { from, to } = scheduleItems[scheduleItems.length - 1];
+    if (from === "" || to === "") {
+      toast.error("Preencha corretamente os horários");
+    } else {
+      setLoadingClass(true);
+      const objectSend = {
+        name,
+        avatar,
+        whatsapp,
+        bio,
+        subject,
+        cost: Number(cost),
+        schedule: scheduleItems,
+      };
+      fetchCreateClass(objectSend);
+    }
+  };
 
   return (
     <div className="teacher-form container">
@@ -99,40 +100,32 @@ const TeacherForm = () => {
                 required: "Peencha este campo",
               })}
               name="name"
-              label="Nome completo"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              label="Nome completo*"
               error={Boolean(errors.name)}
             />
             <Input
               register={register}
               name="avatar"
               label="Avatar"
-              value={avatar}
-              onChange={(e) => setAvatar(e.target.value)}
               error={Boolean(errors.avatar)}
             />
             <Input
               register={register({ required: "Peencha este campo" })}
               name="whatsapp"
-              label="Whatsapp"
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
+              label="Whatsapp *"
               error={Boolean(errors.whatsapp)}
             />
-
             <Textarea
               register={register({ required: "Peencha este campo" })}
               name="bio"
-              label="Biografia"
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              // error={Boolean(errors.bio)}
+              label="Biografia *"
+              error={Boolean(errors.bio)}
             />
           </fieldset>
           <fieldset>
             <legend>Sobre aula</legend>
             <Select
+              register={register({ required: "Peencha este campo" })}
               name="subject"
               label="Matéria"
               options={[
@@ -149,12 +142,15 @@ const TeacherForm = () => {
               ]}
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
+              error={Boolean(errors.subject)}
             />
             <Input
+              register={register({
+                required: "Peencha este campo",
+              })}
               name="cost"
               label="Custo da sua aula por hora"
-              value={cost}
-              onChange={(e) => setCost(e.target.value)}
+              error={Boolean(errors.cost)}
             />
           </fieldset>
           <fieldset>
