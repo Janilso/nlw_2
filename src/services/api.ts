@@ -3,8 +3,9 @@ import { toast } from "react-toastify";
 const URL_BASE = "http://localhost:3333";
 const URL_CONNECTIONS = `/connections`;
 const URL_CLASSES = `/classes`;
+const URL_CLASSES_ALL = `/classes/all`;
 
-export { URL_BASE, URL_CONNECTIONS, URL_CLASSES };
+export { URL_BASE, URL_CONNECTIONS, URL_CLASSES, URL_CLASSES_ALL };
 
 const api = axios.create({
   baseURL: URL_BASE,
