@@ -1,0 +1,176 @@
+@import "../../assets/styles/var-colors.scss";
+@import "../../assets/styles/aligments.scss";
+@import "../../assets/styles/functions.scss";
+
+.teacher-form {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+
+  .comp-header {
+    .comp-header__title {
+      margin-bottom: 6.4rem;
+    }
+  }
+
+  .teacher-form__formulario {
+    z-index: 1;
+    background: $box-base;
+    width: 100%;
+    max-width: 74rem;
+    border-radius: $border-radius;
+    margin: -3.2rem auto 3.2rem;
+    padding-top: 6.4rem;
+    overflow: hidden;
+    position: relative;
+
+    label {
+      color: $text-complement;
+    }
+
+    form {
+      fieldset {
+        border: 0;
+        padding: 0 2.4rem;
+
+        + fieldset {
+          margin-top: 6.4rem;
+        }
+        .comp-input {
+          + .comp-input,
+          + .comp-select,
+          + .comp-textarea {
+            margin-top: 2.4rem;
+          }
+        }
+        .comp-select {
+          + .comp-select,
+          + .comp-input,
+          + .comp-textarea {
+            margin-top: 2.4rem;
+          }
+        }
+
+        legend {
+          font: 700 2.4rem Archivo;
+          color: $text-title;
+          margin-bottom: 2.4rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          padding-bottom: 1.6rem;
+          border-bottom: 1px solid $line-in-white;
+
+          button {
+            background: none;
+            border: none;
+            color: $primary;
+            font: 700 1.6rem Archivo;
+            cursor: pointer;
+            @include propertyAllBrowsers(transition, all 0.2s);
+
+            &:hover {
+              color: $primary-dark;
+            }
+          }
+        }
+      }
+      footer {
+        padding: 4rem 2.4rem;
+        background: $box-footer;
+        border-top: 1px solid $line-in-white;
+        margin-top: 6.4rem;
+
+        p {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1, 4rem;
+          line-height: 2.4rem;
+          color: $text-complement;
+
+          img {
+            margin-right: 2rem;
+          }
+        }
+
+        button {
+          width: 100%;
+          height: 5.6rem;
+          background: $secundary;
+          color: $button-text;
+          border: 0;
+          border-radius: $border-radius;
+          cursor: pointer;
+          font: 700 1.6rem Archivo;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          margin-top: 3.2rem;
+          outline: 0 !important;
+
+          @include propertyAllBrowsers(transition, all 0.2s);
+
+          &:hover {
+            background: $secundary-dark;
+          }
+        }
+        button:focus {
+          outline: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 700px) {
+  .teacher-form {
+    max-width: 100vw;
+    .comp-header {
+      .comp-header__title {
+        margin-bottom: 0rem;
+      }
+    }
+
+    .teacher-form__formulario {
+      background: $box-base;
+      width: 100%;
+      max-width: 74rem;
+      border-radius: $border-radius;
+      margin: -3.2rem auto 3.2rem;
+      padding-top: 6.4rem;
+      overflow: hidden;
+
+      form {
+        fieldset {
+          padding: 0 6.4rem;
+
+          .teacher-form__schedule-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            column-gap: 1.6rem;
+
+            .comp-input {
+              margin-top: 0;
+            }
+          }
+        }
+        footer {
+          padding: 4rem 6.4rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          p {
+            justify-content: space-between;
+          }
+          button {
+            width: 20rem;
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+}

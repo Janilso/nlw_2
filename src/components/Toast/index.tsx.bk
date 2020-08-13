@@ -1,0 +1,16 @@
+import React from "react";
+
+import "./styles.scss";
+
+type typesAppearance = "success" | "error" | "warning" | "info";
+
+interface ToastProps {
+  mensage: string;
+  appearance?: typesAppearance;
+}
+
+const Toast: React.FC<ToastProps> = ({ mensage, appearance = "error" }) => {
+  return <div></div>;
+};
+
+export default Toast;

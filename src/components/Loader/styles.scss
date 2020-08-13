@@ -1,0 +1,66 @@
+@import "../../assets/styles/var-colors.scss";
+@import "../../assets/styles/functions.scss";
+
+.comp-loader {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 0.3em solid $secundary-dark;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: -0.3em;
+    left: -0.3em;
+    bottom: -0.3em;
+    right: -0.3em;
+    border-radius: 50%;
+    border: 0.3em solid transparent;
+    border-top-color: lighten($secundary, 10);
+    @include propertyAllBrowsers(animation, spin 0.7s linear infinite);
+
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        tranform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        tranform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+  }
+
+  &.comp-loader__primary {
+    border: 0.5rem solid $primary-dark;
+    &:after {
+      border-top-color: lighten($primary, 10);
+    }
+  }
+
+  &.comp-loader__secondary {
+    border: 0.5rem solid $secundary-dark;
+    &:after {
+      border-top-color: lighten($secundary, 10);
+    }
+  }
+
+  &.comp-loader__white {
+    border: 0.5rem solid $grey;
+    &:after {
+      border-top-color: $white;
+    }
+  }
+}

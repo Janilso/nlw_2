@@ -1,0 +1,125 @@
+@import "../../assets/styles/var-colors.scss";
+@import "../../assets/styles/aligments.scss";
+@import "../../assets/styles/functions.scss";
+
+.comp-item-teacher {
+  margin: 3.2rem auto;
+  width: 90%;
+
+  .comp-item-teacher__item {
+    background: $box-base;
+    border: 1px solid $line-in-white;
+    border-radius: $border-radius;
+    margin-top: 2.4rem;
+    overflow: hidden;
+
+    header {
+      padding: 3.2rem 2rem;
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 8rem;
+        height: 8rem;
+        object-fit: cover;
+        object-position: center center;
+        border-radius: 50%;
+      }
+
+      div {
+        margin-left: 2.4rem;
+        strong {
+          font: 700 2.4rem Archivo;
+          display: block;
+          color: $text-title;
+        }
+        span {
+          font-size: 1.6rem;
+          display: block;
+          margin-top: 0.4rem;
+        }
+      }
+    }
+
+    > p {
+      padding: 0 2rem;
+      font-size: 1.6rem;
+      line-height: 2.8rem;
+    }
+
+    footer {
+      padding: 3.2rem 2rem;
+      background: $box-footer;
+      border-top: 1px solid $line-in-white;
+      margin-top: 3.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      p {
+        strong {
+          color: $primary;
+          font-size: 1.6rem;
+          display: block;
+        }
+      }
+
+      a {
+        width: 20rem;
+        height: 5.6rem;
+        background: $secundary;
+        color: $button-text;
+        border: 0;
+        text-decoration: none;
+        border-radius: $border-radius;
+        font: 700 1.4rem Archivo;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        @include propertyAllBrowsers(transition, all 0.2s);
+
+        &:hover {
+          cursor: pointer;
+          background: $secundary-dark;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 700px) {
+  .comp-item-teacher {
+    max-width: 740px;
+    margin: 0 auto;
+
+    .comp-item-teacher__item {
+      header,
+      footer {
+        padding: 3.2rem;
+      }
+
+      > p {
+        padding: 0 3.2rem;
+      }
+
+      footer {
+        p {
+          strong {
+            display: initial;
+            margin-left: 1.6rem;
+          }
+        }
+
+        button {
+          width: 24.5rem;
+          font-size: 1.6rem;
+          justify-content: center;
+
+          img {
+            margin-right: 1.6rem;
+          }
+        }
+      }
+    }
+  }
+}

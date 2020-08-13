@@ -1,4 +1,5 @@
 @import "./var-colors.scss";
+@import "./functions.scss";
 
 :root {
   font-size: 60%;
@@ -20,17 +21,13 @@ body {
   background-color: $background;
 }
 
-#root {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 body,
 input,
 button,
 textarea {
   font: 500 1.6rem Poppins;
+  color: $text-base;
+  @include propertyAllBrowsers(transition, all 0.2s);
 }
 
 .container {

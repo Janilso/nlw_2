@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   logoImg,
   landingImg,
@@ -7,8 +7,16 @@ import {
   purpleHeartIcon,
 } from "../../assets";
 import "./styles.scss";
+import { Link } from "react-router-dom";
+import { getConnections } from "../../services/serviceConnections";
 
 const Landing = () => {
+  const [totalConnections, setTotalConnections] = useState(0);
+
+  useEffect(() => {
+    getConnections().then(({ total }) => setTotalConnections(total));
+  }, []);
+
   return (
     <div className="pg-landing">
       <div className="pg-landing__content container">
@@ -22,17 +30,17 @@ const Landing = () => {
           className="pg-landing__hero"
         />
         <div className="pg-landing__actions">
-          <a href="#teste" className="pg-landing__study">
+          <Link to="/study" className="pg-landing__study">
             <img src={studyIcon} alt="Estudar" />
             Estudar
-          </a>
-          <a href="#teste" className="pg-landing__give">
+          </Link>
+          <Link to="/give-classes" className="pg-landing__give">
             <img src={giveIcon} alt="Dar aulas " />
             Dar aulas
-          </a>
+          </Link>
         </div>
         <span className="pg-landing__total-connections">
-          Total de 200 conexões já realizadas
+          Total de {totalConnections} conexões já realizadas
           <img src={purpleHeartIcon} alt="Coração roxo" />
         </span>
       </div>
