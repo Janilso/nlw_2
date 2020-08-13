@@ -29,10 +29,8 @@ const TeacherList = () => {
 
   function searchTeachers(e: FormEvent) {
     e.preventDefault();
-    console.log("clicked");
 
     setLoadingTeachers(true);
-
     getClasses(subject, Number(weekday), time)
       .then((response) => {
         setTeachers(response);
