@@ -17,13 +17,13 @@ api.defaults.headers.post["Access-Control-Allow-Origin"] = "true";
 const statusMessage = (code: number) => {
   switch (code) {
     case 400:
-      return "Falha na requisição";
+      return "Falha na requisição.";
     case 401:
       return "Você não tem permissão para seguir com esse acesso.";
     case 403:
       return "Você não tem permissão para seguir com esse acesso.";
     case 404:
-      return "Falha ao carregar a página";
+      return "Falha ao carregar a página.";
     case 500:
       return "O Serviço está temporariamente Indisponível. Tente novamente mais tarde.";
     case 504:
