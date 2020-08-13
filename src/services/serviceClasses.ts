@@ -1,4 +1,4 @@
-import api, { URL_CLASSES } from "./api";
+import api, { URL_CLASSES, URL_CLASSES_ALL } from "./api";
 
 export interface Teacher {
   id: number;
@@ -21,6 +21,15 @@ const getClasses = (subject: string, weekDay: number, time: string) => {
   });
 };
 
+const getClassesAll = () => {
+  return new Promise<Teacher[]>((resolve, reject) => {
+    api
+      .get(URL_CLASSES_ALL)
+      .then(({ data }) => resolve(data))
+      .catch((err) => reject(`Error: ${err}`));
+  });
+};
+
 const createClass = (objectSend: Object) => {
   return new Promise((resolve, reject) => {
     api
@@ -30,4 +39,4 @@ const createClass = (objectSend: Object) => {
   });
 };
 
-export { getClasses, createClass };
+export { getClasses, getClassesAll, createClass };

@@ -1,11 +1,16 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, useEffect } from "react";
 import Header from "../../components/Header";
 import "./styles.scss";
 import ItemTeacher from "../../components/ItemTeacher";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
-import { getClasses, Teacher } from "../../services/serviceClasses";
+import {
+  getClasses,
+  getClassesAll,
+  Teacher,
+} from "../../services/serviceClasses";
 import Button from "../../components/Button";
+import Loader from "../../components/Loader";
 
 const TeacherList = () => {
   const [subject, setSubject] = useState("");
@@ -13,6 +18,14 @@ const TeacherList = () => {
   const [time, setTime] = useState("");
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [loadingTeachers, setLoadingTeachers] = useState(false);
+
+  useEffect(() => {
+    fetchGetAllTeachers();
+  }, []);
+
+  /*
+   * Functions
+   */
 
   function searchTeachers(e: FormEvent) {
     e.preventDefault();
@@ -25,15 +38,53 @@ const TeacherList = () => {
         setTeachers(response);
         setLoadingTeachers(false);
       })
+      .catch(() => {
+        setTeachers([]);
+        setLoadingTeachers(false);
+      });
+  }
+
+  function fetchGetAllTeachers() {
+    setLoadingTeachers(true);
+    getClassesAll()
+      .then((resultado) => {
+        setTeachers(resultado);
+        setLoadingTeachers(false);
+      })
       .catch(() => setLoadingTeachers(false));
   }
 
+  /*
+   * Renders
+   */
   function renderEmptyTeachers() {
     return (
       <div className="pg-teacher-list__empty">
         Nenhum professor encontrado com sua pesquisa.
       </div>
     );
+  }
+
+  function renderListTeachers() {
+    return teachers.length
+      ? teachers.map(
+          ({ id, avatar, name, bio, cost, subject, whatsapp }, index) => {
+            return (
+              <div key={index}>
+                <ItemTeacher
+                  id={id}
+                  avatar={avatar}
+                  nome={name}
+                  disciplina={subject}
+                  descricao={bio}
+                  preco={cost}
+                  whatsapp={whatsapp}
+                />
+              </div>
+            );
+          }
+        )
+      : renderEmptyTeachers();
   }
 
   return (
@@ -88,26 +139,16 @@ const TeacherList = () => {
           />
         </form>
       </Header>
-      <div className="pg-teacher-list__listagem">
-        {teachers.length
-          ? teachers.map(
-              ({ id, avatar, name, bio, cost, subject, whatsapp }, index) => {
-                return (
-                  <div key={index}>
-                    <ItemTeacher
-                      id={id}
-                      avatar={avatar}
-                      nome={name}
-                      disciplina={subject}
-                      descricao={bio}
-                      preco={cost}
-                      whatsapp={whatsapp}
-                    />
-                  </div>
-                );
-              }
-            )
-          : renderEmptyTeachers()}
+      <div
+        className={`pg-teacher-list__listagem ${
+          loadingTeachers ? "pg-teacher-list__loading" : ""
+        }`}
+      >
+        {loadingTeachers ? (
+          <Loader type="secondary" size="3.5rem" />
+        ) : (
+          renderListTeachers()
+        )}
       </div>
     </div>
   );
