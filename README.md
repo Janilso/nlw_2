@@ -2,7 +2,7 @@
 
 Projeto contendo a API Backend do Sensoriamento Remoto dentro do APP BB3.0
 
-- Inicar projeto
+- Iniciar projeto
 
   - Rodar no terminal local
     `yarn install`
