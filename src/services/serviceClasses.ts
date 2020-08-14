@@ -1,6 +1,6 @@
-import api, { URL_CLASSES } from "./api";
+import api, { URL_CLASSES, URL_CLASSES_ALL, URL_CLASSES_SUBJECTS } from "./api";
 
-export interface Teacher {
+export interface iTeacher {
   id: number;
   subject: string;
   cost: number;
@@ -10,12 +10,33 @@ export interface Teacher {
   whatsapp: number;
   bio: string;
 }
+export interface iSubject {
+  subject: string;
+}
 
 const getClasses = (subject: string, weekDay: number, time: string) => {
   const objectSend = { params: { subject, week_day: weekDay, time } };
-  return new Promise<Teacher[]>((resolve, reject) => {
+  return new Promise<iTeacher[]>((resolve, reject) => {
     api
       .get(URL_CLASSES, objectSend)
+      .then(({ data }) => resolve(data))
+      .catch((err) => reject(`Error: ${err}`));
+  });
+};
+
+const getClassesAll = () => {
+  return new Promise<iTeacher[]>((resolve, reject) => {
+    api
+      .get(URL_CLASSES_ALL)
+      .then(({ data }) => resolve(data))
+      .catch((err) => reject(`Error: ${err}`));
+  });
+};
+
+const getClassesSubjects = () => {
+  return new Promise<iSubject[]>((resolve, reject) => {
+    api
+      .get(URL_CLASSES_SUBJECTS)
       .then(({ data }) => resolve(data))
       .catch((err) => reject(`Error: ${err}`));
   });
@@ -30,4 +51,4 @@ const createClass = (objectSend: Object) => {
   });
 };
 
-export { getClasses, createClass };
+export { getClasses, getClassesAll, getClassesSubjects, createClass };

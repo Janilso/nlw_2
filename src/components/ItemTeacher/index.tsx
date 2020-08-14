@@ -3,6 +3,7 @@ import { whatsappIcon } from "../../assets";
 import "./styles.scss";
 import { createConnections } from "../../services/serviceConnections";
 import Button from "../Button";
+import { formatToBRL } from "../../utils/formats";
 
 interface ItemTeacher {
   avatar: string;
@@ -55,7 +56,7 @@ const ItemTeacher: React.FC<ItemTeacher> = ({
         <p> {descricao} </p>
         <footer>
           <p>
-            Preço/Hora <strong>{preco}</strong>
+            Preço/Hora <strong>{formatToBRL(preco)}</strong>
           </p>
           <Button
             text="Entrar em contato"

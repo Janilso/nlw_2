@@ -32,7 +32,7 @@ const TeacherForm = () => {
     { week_day: 0, from: "", to: "" },
   ]);
   const [loadingClass, setLoadingClass] = useState(false);
-  const { handleSubmit, errors, register } = useForm<IFormInput>();
+  const { handleSubmit, errors, register, reset } = useForm<IFormInput>();
 
   // Functions
   function addNewScheduleItem() {
@@ -59,6 +59,9 @@ const TeacherForm = () => {
     createClass(objectSend)
       .then(() => {
         setLoadingClass(false);
+        setSubject("");
+        setScheduleItems([{ week_day: 0, from: "", to: "" }]);
+        reset();
         toast.success("Cadastro realizado com sucesso");
       })
       .catch(() => setLoadingClass(false));

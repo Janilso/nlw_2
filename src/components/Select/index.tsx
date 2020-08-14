@@ -15,6 +15,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   error?: boolean;
   errorText?: string;
   options: Array<{
+    key?: string;
     value: string;
     label: string;
   }>;
