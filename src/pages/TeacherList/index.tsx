@@ -7,20 +7,25 @@ import Select from "../../components/Select";
 import {
   getClasses,
   getClassesAll,
-  Teacher,
+  iTeacher,
+  iSubject,
+  getClassesSubjects,
 } from "../../services/serviceClasses";
 import Button from "../../components/Button";
 import Loader from "../../components/Loader";
+import { transformToSelectOption } from "../../utils/transforms";
 
 const TeacherList = () => {
   const [subject, setSubject] = useState("");
   const [weekday, setWeekday] = useState("");
   const [time, setTime] = useState("");
-  const [teachers, setTeachers] = useState<Teacher[]>([]);
+  const [teachers, setTeachers] = useState<iTeacher[]>([]);
+  const [subjects, setSubjects] = useState<iSubject[]>([]);
   const [loadingTeachers, setLoadingTeachers] = useState(false);
 
   useEffect(() => {
     fetchGetAllTeachers();
+    fetchGetSubjects();
   }, []);
 
   /*
@@ -50,6 +55,12 @@ const TeacherList = () => {
         setLoadingTeachers(false);
       })
       .catch(() => setLoadingTeachers(false));
+  }
+
+  function fetchGetSubjects() {
+    getClassesSubjects().then((resultado) => {
+      setSubjects(resultado);
+    });
   }
 
   /*
@@ -92,18 +103,12 @@ const TeacherList = () => {
           <Select
             name="subject"
             label="Matéria"
-            options={[
-              { value: "Artes", label: "Artes" },
-              { value: "Biologia", label: "Biologia" },
-              { value: "Ciências", label: "Ciências" },
-              { value: "Educação física", label: "Educação física" },
-              { value: "Física", label: "Física" },
-              { value: "Geografia", label: "Geografia" },
-              { value: "História", label: "Artes" },
-              { value: "Matemática", label: "Matemática" },
-              { value: "Português", label: "Português" },
-              { value: "Química", label: "Química" },
-            ]}
+            options={transformToSelectOption(
+              subjects,
+              "subject",
+              "subject",
+              "subject"
+            )}
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
           />

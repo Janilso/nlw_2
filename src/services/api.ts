@@ -4,8 +4,15 @@ const URL_BASE = "http://localhost:3333";
 const URL_CONNECTIONS = `/connections`;
 const URL_CLASSES = `/classes`;
 const URL_CLASSES_ALL = `/classes/all`;
+const URL_CLASSES_SUBJECTS = `/classes/subjects`;
 
-export { URL_BASE, URL_CONNECTIONS, URL_CLASSES, URL_CLASSES_ALL };
+export {
+  URL_BASE,
+  URL_CONNECTIONS,
+  URL_CLASSES,
+  URL_CLASSES_ALL,
+  URL_CLASSES_SUBJECTS,
+};
 
 const api = axios.create({
   baseURL: URL_BASE,
